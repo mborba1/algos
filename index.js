@@ -434,6 +434,7 @@ function sameFrequency(num1, num2){
   
   if(num1.length !== num2.length) return false;
   
+  
   let obj = {};
   
   for(let i =0; i<= num1.length; i++){
