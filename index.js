@@ -434,7 +434,7 @@ function sameFrequency(num1, num2){
   
   if(num1.length !== num2.length) return false;
   
-  
+
   let obj = {};
   
   for(let i =0; i<= num1.length; i++){
@@ -577,4 +577,22 @@ class LRUCache {
   }
   // Do not edit the line below.
   exports.LRUCache = LRUCache;
-  
+  //write a functio called power which accepts a base and an exponent. The function should return the power of the base to the exponent
+  //This function should mimic the functionality of Math.pow() - do not worry about negative bases and exponents
+
+  function power(base, exponent){
+    if (exponent === 0) return 1;
+    
+    return base * power(base, exponent-1)
+    2
+    
+}
+
+function indexOf(arr, val){
+    for (let i = 0; i < arr.length; i++){
+       if(arr[i] === val){
+           return i
+       }
+    }
+    return -1
+}
