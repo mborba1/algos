@@ -596,3 +596,167 @@ function indexOf(arr, val){
     }
     return -1
 }
+
+// BubbleSort
+
+function bubbleSort(array) {
+  // Write your code here.
+  let temp;
+	for(let i = 0; i < array.length; i++){
+    for(let j = 0; j < array.length; j++){
+      if(array[j] > array[j+ 1]){
+        temp = array[j + 1]
+        array[j + 1] = array[j]
+        array[j] = temp
+        
+      }
+    }
+  }
+  return array
+}
+
+
+bubbleSort([8,5,2,9,5,6,3])
+//insertion Sort
+function insertionSort(array) {
+  // Write your code here.
+	for(let i=1; i<array.length; i++) {
+		let currElem=array[i]
+		for(var j= i-1; j>=0 && array[j] > currElem; j--) {
+      array[j+1] = array[j]
+			
+		}
+      array[j+1] = currElem
+		
+	}
+	return array
+}
+console.log(insertionSort([8,5,2,9,5,6,3]))
+//selection sort
+function selectionSort(array) {
+  // Write your code here.
+	for(let i =0; i < array.length; i++){
+		let min = i;
+		for(let j = i+1; j < array.length; j++){
+			if(array[j] < array[min]){
+			 min =j
+			}
+			//if(i !== min){
+				let temp = array[i]
+			  array[i] = array[min]
+			  array[min] = temp
+			//}
+			
+		}
+	}
+	return array
+}
+
+console.log(selectionSort([8,5,2,9,5,6,3]))
+//merge sort
+function merge(arr1, arr2){
+  let results = [];
+  let i = 0;
+  let j = 0;
+
+  while(i < arr1.length && j < arr2.length){
+    if(arr2[j] > arr1[i]){
+      results.push(arr1[i])
+      i++
+    }else{
+      results.push(arr2[j])
+      j++
+    }
+  }
+  while(i < arr1.length){
+    results.push(arr1[i])
+    i++
+  }
+  while(j < arr2.length){
+    results.push(arr2[j])
+    j++
+  }
+  return results
+}
+
+function mergeSort(arr){
+  if(arr.length  <= 1) return arr;
+
+  let mid = Math.floor(arr.length / 2);
+  let left = mergeSort(arr.slice(0, mid));
+  let right = mergeSort(arr.slice(mid));
+
+  return merge(left, right)
+}
+mergeSort([10, 24, 76, 73, 72, 1, 9])
+
+function threeNumberSort(array, order) {
+    // Write your code here.
+      let first = order[0]
+      let last = order[2]
+      let i =0
+      for(let idx=0; idx < array.length; idx++){
+          if(array[idx] === first){
+        let temp = array[idx];
+        array[idx] = array[i];
+        array[i] = temp;
+  
+  // 			swap(i, idx, array)
+              i++	
+          }
+      }
+      let j = array.length -1
+      for(let idx = array.length -1; idx > -1; idx--){
+          if(array[idx] === last){
+              let temp = array[idx];
+        array[idx] = array[j];
+        array[j] = temp;
+    //	swap(j, idx, array)
+              j--
+          }
+      }
+      return array
+  }
+  
+  // function swap(i, j, array){
+  // 	let temp = array[j]
+  // 	array[j] = array[i]
+  // 	array[i] = temp
+  //}
+  
+  threeNumberSort([1,0,0,-1,-1,0,1,1], [0,1,-1])
+
+  //Quick Sort
+
+
+  function pivot(arr, start =0, end = arr.length-1){
+
+    const swap = (arr, idx1, idx2) => {
+        [arr[idx1], arr[idx2]] = [arr[idx2], arr[idx1]]
+    }
+
+    let pivot = arr[start];
+    let swapIdx = start;
+
+    for(let i = start +1; i <= end; i++){
+        if(pivot > arr[i]){
+            swapIdx++;
+            swap(arr, swapIdx, i)
+        }
+    }
+    swap(arr, start, swapIdx)
+    return swapIdx;
+  }
+
+  function quickSort(arr, left=0, right=arr.length -1){
+      if(left < right){
+          let pivotIndex = pivot(arr,left, right)
+          //left
+          quickSort(arr, left, pivotIndex -1)
+          //right
+          quickSort(arr, pivotIndex+1, right)
+      }
+      return arr;
+  }
+
+  quickSort([4,6,9,1,2,5])
