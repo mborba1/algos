@@ -1,3 +1,16 @@
+//Arrays two sum return indexes
+var twoSum = function(nums, target) {
+    let hash = {};
+    for(let i =0; i < nums.length; i++){
+        let total = target - nums[i];
+        if(total in hash){
+            return [i, hash[total]]
+        }else{
+            hash[nums[i]]=i
+        }
+    }
+};
+
 //recursive lesson
 
 function sumRange(num){
