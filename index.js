@@ -802,3 +802,36 @@ function threeNumberSort(array, order) {
   }
 
   radixSort([23, 345, 5467, 12, 2345, 9852])
+
+  //two number sum
+
+  //Given an array of integers and an integer target, return indices of two numbers that add up to the target number
+
+  function twoSum(nums, target){
+    //first approach - brute force - could be  2 nested loops, add each number and compare if they match target: this would be On*2
+    //second approach - would be to sort the array, create 2 pointers, one for the beginning, second to the end, and while the 
+    //starting pointer is less that the end pointer, keep checking if they add up to the target, if the total is less than target, 
+    //move the start pointer to towards the right, if greater than target, move end pointer towards left. Retrun the oncides of the 
+    //two numbers: this woukd be O(nlogn) because we are sorting the array
+    //third approach - Create a hash table and keep the record of the total amount when subtracting number from target, keep looping thru the array 
+    //to check if the number is already there, if it is, return the numbers indices, if not, continue looping and adding the total that is not already 
+    //there.: the time complexity is O(n) since it's transversing trhu the array at most once and the space complexity is O(n) since we adding at most
+    // n time into the hash table
+
+    const hashTable = {};
+    for(let i=0; i< nums.length; i++){
+      let total = target - nums[i];
+      if(total in hashTable){
+        return [i, hashTable[total]]
+      }else{
+
+        //this adds the number seen as key and the index of that number as value. i.e num: idx or 3:0 for an array [3,5,1,4,-8]
+        //so when I find the number that matches the total I can return that index
+        hashTable[nums[i]] =i
+      }
+    }
+  }
+
+  //three Sum
+
+  
