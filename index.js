@@ -847,4 +847,119 @@ function threeNumberSort(array, order) {
 
   //three Sum
 
-  
+  ///Given an integer array nums, return all triplets [nums[i], nums[j], nums[k]] such that i !=j, i !=k and j !=k, and the sum is equal to zero 0
+
+
+var threeSum = function(nums) {
+    if(nums.length <= 1) return []
+    nums.sort((a,b) => a-b);
+    let triples =[]
+    
+    for(let i=0; i< nums.length; i++){
+        if(nums[i] > 0) break;
+        
+        if(i === 0 || nums[i -1] !==nums[i]){
+            twoSum(nums, i, triples)
+        }
+    }
+    return triples;
+}
+var twoNumSum = function(nums, i, triples){
+    let leftIdx = i+1;
+    let rightIdx = nums.length -1;
+    while(leftIdx < rightIdx){
+        const result = nums[i] + nums[leftIdx] + nums[rightIdx];
+        if(result < 0){
+            leftIdx++
+        }else if(result> 0){
+            rightIdx--
+        }else{
+            triples.push([nums[i], nums[leftIdx], nums[rightIdx]])
+            leftIdx++
+            rightIdx--
+            while(leftIdx < rightIdx && nums[leftIdx] === nums[leftIdx -1]){
+                leftIdx ++
+            } 
+        }
+    }
+}        
+        
+
+
+
+
+function twoSum(nums, i, triples){
+  const hash ={};
+  let j = i+1;
+
+  while(j < nums.length){
+    result = -nums[i] - nums[j];
+    if(result in hash){
+      triples.push([nums[i], nums[j], result])
+      while(j+1 < nums.length && nums[j] === nums[j + 1]){
+        j++
+      }
+      
+    } 
+    hash[nums[j]] = true
+      j++
+  }
+
+}
+
+
+
+
+//no sort solution
+
+function threeSum (nums){
+  let res = new Set();
+  let dups = new Set();
+  let seen= new Map();
+
+  for(let i =0; i<nums.length; i++){
+    if(!dups.has(nums[i])){
+      dups.add(nums[i])
+      for(let j= i+1; j <nums.length; j++){
+        let complement = -nums[i] -nums[j]
+        if(seen.has(complement)  && seen.get(complement)=== i){
+          let triplet= [nums[i], nums[j], complement]
+          triplet.sort()
+          res.add(triplet.join(','))
+        }
+        seen.set(nums[j], i)
+      }
+    }
+  }
+
+  let resOfArray = []
+  res.forEach(item => resOfArray.push(item.split(',').map(item => parseInt(item))))
+
+  return resOfArray;
+}
+
+nums = [-1,0,1,2,-1,-4]
+threeSum(nums)
+
+//longest no repeating substring
+//we need to transverse our string and keep track of the last seen index of each letter
+//whenever we get to each letter we are going to store the letter in a hash table with the index
+//corresponding as a key/value pair
+function findLongestSubstring(str) {
+  let longest = 0;
+  let seen = {};
+  let start = 0;
+ 
+  for (let i = 0; i < str.length; i++) {
+    let char = str[i];
+    if (seen[char]) {
+      start = Math.max(start, seen[char]);
+    }
+    // index - beginning of substring + 1 (to include current in count)
+    longest = Math.max(longest, i - start + 1);
+    // store the index of the next char so as to not double count
+    seen[char] = i + 1;
+  }
+  return longest;
+}
+
