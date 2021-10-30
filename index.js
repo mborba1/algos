@@ -415,8 +415,8 @@ function countUniqueValues(arr){
    
 }
 
-time O(n)
-space O(1)
+// time O(n)
+// space O(1)
 
 function maxSubarraySum (arr, num){
   let maxSum = 0;
@@ -962,4 +962,59 @@ function findLongestSubstring(str) {
   }
   return longest;
 }
+
+//balance brackets
+//Write a function that determines whether an input string has balanced brackets.
+
+/** You are given an input string consisting of brackets—square [ ], round ( ), and curly { }. The input string can include other text. Write a function that returns either true if the brackets in the input string are balanced or false if they are not. Balanced means that any opening bracket of a particular type must also have a closing bracket of the same type.
+
+An empty input string or a string without brackets can also be considered "balanced".
+
+Examples
+hasBalancedBrackets('[][(){}'); // false
+hasBalancedBrackets('({)}'); // false
+hasBalancedBrackets('({[]})'); // true
+hasBalancedBrackets('text ( is allowed ){rwwrwrrww [] ()}'); // true */
+
+//need to keep track of each opening bracket. we will create a stack and start treversing our string. at each chararcter in our string we will check if it's an 
+//opening bracket,
+//1) check if our first character is an opening bracket, if it is, we store it in our
+// stack
+//2) continue iterating thru the string and check again if it's an opening and add into the stack
+//3) if we reach a closing bracket, first we check if our stack is empty, which means 
+//we don't have any opening brackets and we can return false
+//4) if we do have brackets in our stack, we want to check what our last bracket was and if corresponds to the type of the current brackt that we are at. If don't match, we can return false
+//5) if they match, the we are good, so we remove that bracket form our stack, pop the value off the stack
+//keep moving on thru the string, only return true if our stack is empty 
+// [ (, (, [,           ]
+
+function hasBalancedBrackets(string){
+  let stack = []
+  let open = '([{';
+  let close = ')]}';
+  let matchingBracket ={
+    ")": "(", "]": "[", "}": "{"
+  }
+  for(const char of string){
+    if(open.includes(char)){
+      stack.push(char)
+    }else if(close.includes(char)){
+      if(stack.length === 0){
+        return false
+      }
+      if(stack[stack.length-1] === matchingBracket[char]){
+        stack.pop()
+      }else{
+        return false
+      }
+    }
+  }
+  return stack.length === 0
+}
+
+// hasBalancedBrackets('[][(){}')
+
+// hasBalancedBrackets('({)}'); // false
+// hasBalancedBrackets('({[]})'); // true
+hasBalancedBrackets('text ( is allowed ){rwwrwrrww [] ()}'); // true */
 
