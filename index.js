@@ -963,7 +963,11 @@ function findLongestSubstring(str) {
   return longest;
 }
 //Time: O(n)
-//Space: O(n)
+//Space: O(min(n, a) // because we are storing the substring with the max amount of no duplicate 
+//characters
+//in this hash table we are storing the total amount of letters in our string minus the duplicates
+//whenever we are storing has to be the min value between n and a where a represents the alphabet of the
+//character
 
 //balance brackets
 //Write a function that determines whether an input string has balanced brackets.
@@ -1021,3 +1025,4 @@ function hasBalancedBrackets(string){
 hasBalancedBrackets('text ( is allowed ){rwwrwrrww [] ()}'); // true */
 
 //Time: O(n)
+//Space: O(n)
