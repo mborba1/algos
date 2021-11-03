@@ -962,6 +962,8 @@ function findLongestSubstring(str) {
   }
   return longest;
 }
+//Time: O(n)
+//Space: O(n)
 
 //balance brackets
 //Write a function that determines whether an input string has balanced brackets.
@@ -1018,3 +1020,4 @@ function hasBalancedBrackets(string){
 // hasBalancedBrackets('({[]})'); // true
 hasBalancedBrackets('text ( is allowed ){rwwrwrrww [] ()}'); // true */
 
+//Time: O(n)
