@@ -1,10 +1,24 @@
 //Arrays two sum return indexes
+/** Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
+
+You may assume that each input would have exactly one solution, and you may not use the same element twice.
+
+You can return the answer in any order. */
 var twoSum = function(nums, target) {
+  //create a hash table
     let hash = {};
+    //iterate thru the nums array
     for(let i =0; i < nums.length; i++){
+      //create a variable that holds the calculation of target minus the elemenet of the
+      //array - nums[i]
+      //cause we need to check if the number that sums up to the target is already in the
+      //hash table
         let total = target - nums[i];
+        //check if the total already is in hash table, if so return the index
+        //of current number and the index of total(second number that ass up to target)
         if(total in hash){
             return [i, hash[total]]
+            //otherwise add that number to hash table as key, and the idex as the value
         }else{
             hash[nums[i]]=i
         }
@@ -29,7 +43,7 @@ factorial(2)
 
 // problem solving
 
-
+// assuming the array is already sorted
 function averagePair(arr, val){
     let left = 0;
     let right = arr.length -1
@@ -50,7 +64,9 @@ function averagePair(arr, val){
   
   averagePair([-1,0,3,4,5,6], 4.1)
 
-  //** Given a string, return an array of all the permutations of that string. The permutations of the string should be the same length as the original string (i.e. use each letter in the string exactly once) but do not need to be actual words.
+  //** Given a string, return an array of all the permutations of that string. 
+  //The permutations of the string should be the same length as the original string (i.e. use each letter in the string exactly once) 
+  //but do not need to be actual words.
 
 /** The array that is returned should only contain unique values and its elements should be in alphabetical order. */
 
@@ -61,8 +77,9 @@ stringPermutations('app');
 stringPermutations('nn'); //should return  [ 'nn' ] */
 
 const stringPermutation = (str) => {
+  //initialize an empty array
   let permutationArr = [];
-// split
+// split the string into individual letters
 let chars = str.split('') 
 // shift pushes first letter into the array
 permutationArr.push(chars.shift())
@@ -369,7 +386,7 @@ function validAnagram(str1, str2){
     //test if the character already exists in the object, if so add 1 to it otherwise set to 1 count.
     letter[char] ? letter[char] += 1 : letter[char] =1;
   }
- //here we are comparing the second string with the letters already on the object, so we loop thru the seconf string
+ //here we are comparing the second string with the letters already on the object, so we loop thru the second string
   for(let i =0; i< str2.length; i++){
     let char = str2[i]
     //if the character is not in the object, return false
@@ -824,8 +841,8 @@ function threeNumberSort(array, order) {
     //first approach - brute force - could be  2 nested loops, add each number and compare if they match target: this would be On*2
     //second approach - would be to sort the array, create 2 pointers, one for the beginning, second to the end, and while the 
     //starting pointer is less that the end pointer, keep checking if they add up to the target, if the total is less than target, 
-    //move the start pointer to towards the right, if greater than target, move end pointer towards left. Retrun the oncides of the 
-    //two numbers: this woukd be O(nlogn) because we are sorting the array
+    //move the start pointer to towards the right, if greater than target, move end pointer towards left. Retrun the indices of the 
+    //two numbers: this would be O(nlogn) because we are sorting the array
     //third approach - Create a hash table and keep the record of the total amount when subtracting number from target, keep looping thru the array 
     //to check if the number is already there, if it is, return the numbers indices, if not, continue looping and adding the total that is not already 
     //there.: the time complexity is O(n) since it's transversing trhu the array at most once and the space complexity is O(n) since we adding at most
@@ -1027,47 +1044,71 @@ hasBalancedBrackets('text ( is allowed ){rwwrwrrww [] ()}'); // true */
 //Time: O(n)
 //Space: O(n)
 
+//minimun window substring   // this is a hard question 
+/**Given two strings s and t of lengths m and n respectively, return the minimum window substring of s such that 
+ * every character in t (including duplicates) is included in the window. If there is no such substring, return the empty string "".
 
-//Stacks
-class Node {
-  constructor(value){
-      this.value = value;
-      this.next = null;
-  }
+The testcases will be generated such that the answer is unique.
+
+A substring is a contiguous sequence of characters within the string. */
+
+/** Example 1:
+
+Input: s = "ADOBECODEBANC", t = "ABC"
+Output: "BANC"
+Explanation: The minimum window substring "BANC" includes 'A', 'B', and 'C' from string t. 
+
+Input: s = "a", t = "a"
+Output: "a"
+Explanation: The entire string s is the minimum window.
+
+Input: s = "a", t = "aa"
+Output: ""
+Explanation: Both 'a's from t must be included in the window.
+Since the largest window of s only has one 'a', return empty string.
+*/
+
+function minWindow(s, t){
+//create a variable that calls a helper function on the small string, and takes big and small string
+//create another variable that calls another helper function that takes bigString and the target character counts valiable from above
+
+  let targetCharCount = getCharCount(s,t);
+  let substringBounds = getSubstringBounds(s, targetCharCount);
+//return the big string and the substringBounds
+  return getStringFromBounds(s, substringBounds);
 }
 
-class Stack {
-  constructor(){
-      this.first = null;
-      this.last = null;
-      this.size = 0;
+//this is the helper function to get the character count
+function getCharCount(string){
+  //create a hash table to hold the values
+   let charCounts ={}
+
+   //loop thru the string 
+   for(const char of string){
+     //do something....
+   }
+   return charCounts;
+}
+
+//get subustring bounds helper function
+
+function getSubstringBounds(string, targetCharCount){
+  let substringBounds = [0, Infinity];
+  let substCharCount = {};
+  let numUniqueCharsDone = 0;
+  let numUniqueChars = Object.keys(targetCharCount).length;
+  let leftIdx = 0;
+  let rightIdx = 0;
+
+  //move the rightIdx to the right in the string until you have counted all
+  //of the target characters enough times
+  while(rightIdx < string.length){
+    if(!(string[rightIdx] in targetCharCount)){
+      rightIdx++;
+      continue;
+    }
+    increaseCharCount(string[rightIdx], substCharCount)
+    if(subs)
   }
-  push(val){
-      let newNode = new Node(val)
 
-      if(!this.first){
-          this.first = newNode;
-          this.last = newNode;
-      }else{
-          let temp = this.first;
-          this.first = newNode;
-          this.first.next = temp;
-
-      }
-      return this.size++
-  }
-  pop(){
-      if(!newNode) return null;
-
-      let temp = this.first
-      if(this.size === this.last){
-          this.last = null;
-      }else{
-          this.first = this.first.next
-     
-          this.size--
-
-      }
-     return temp.value
-  }
 }
