@@ -1085,7 +1085,7 @@ function getCharCount(string){
 
    //loop thru the string 
    for(const char of string){
-     //do something....
+     increaseCharCount(char, charCounts)
    }
    return charCounts;
 }
@@ -1093,22 +1093,58 @@ function getCharCount(string){
 //get subustring bounds helper function
 
 function getSubstringBounds(string, targetCharCount){
-  let substringBounds = [0, Infinity];
-  let substCharCount = {};
-  let numUniqueCharsDone = 0;
-  let numUniqueChars = Object.keys(targetCharCount).length;
-  let leftIdx = 0;
-  let rightIdx = 0;
+	let substringBounds = [0, Infinity];
+	let substCharCounts = {};
+	let numUniqueChars = Object.keys(targetCharCount).length;
+	let numUniqueCharsDone = 0;
+	let leftIdx = 0;
+	let rightIdx = 0;
+  //Move the rightIdx to the right in the string until you've counted
+  //all of the target characters enough times
+	while(rightIdx < string.length){
+		if(!(string[rightIdx] in targetCharCount)){
+			rightIdx ++;
+			continue;
+		}
+		increaseCharCount(string[rightIdx], substCharCounts)
+		if (substCharCounts[string[rightIdx]] === targetCharCount[string[rightIdx]]){
+			numUniqueCharsDone++;
+		}
 
-  //move the rightIdx to the right in the string until you have counted all
-  //of the target characters enough times
-  while(rightIdx < string.length){
-    if(!(string[rightIdx] in targetCharCount)){
-      rightIdx++;
-      continue;
-    }
-    increaseCharCount(string[rightIdx], substCharCount)
-    if(subs)
-  }
+    // Move the leftIdx to the right in the string until you no longer 
+    //have enough of the target characters in bewteen the leftIdx and the
+    //rightIdx. Update the sunstringsBouns accordingly
+		while(numUniqueCharsDone === numUniqueChars && leftIdx <= rightIdx){
+			substringBounds = getCloserBounds(leftIdx, rightIdx, substringBounds[0], substringBounds[1]);
+      if(!(string[leftIdx] in targetCharCount)){
+        leftIdx++;
+        continue;
+      }
+      if(substCharCounts[string[leftIdx]] === targetCharCount[string[leftIdx]]){
+        numUniqueCharsDone--
+      }
+      decreaseCharCount(string[leftIdx], substCharCounts);
+      leftIdx++;
+		}
+    rightIdx++;
+	}
+  return substringBounds;
+};
 
+function getCloserBounds(idx1, idx2, idx3, idx4){
+  return idx2 - idx1 < idx4 - idx3 ? [idx1, idx2] : [idx3, idx4];
+};
+
+function getStringFromBounds(string, bounds){
+  const [start, end] = bounds;
+  if(end === Infinity) return '';
+  return string.slice(start, end + 1);
+};
+
+function increaseCharCount(char, charCounts){
+  charCounts[char] = (charCounts[char] || 0) +1;
+};
+
+function decreaseCharCount(char, charCounts){
+  charCounts[char] --;
 }
