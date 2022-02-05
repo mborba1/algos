@@ -235,7 +235,7 @@ function checkisValid(n){
     //only add open parenthesis if open < n
     //only add a closing parenthesis if closed < open
     //valid IF open === closed = n
-
+    //need a helper function
   let result = []
   backtrack("",0,0)
   return result;
