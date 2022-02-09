@@ -161,6 +161,20 @@ function compute(str){
     }
 
 diffWaysToCompute('2*3-4*5')
+//Link list initialize, link list is just a collection of nodes and nodes is very simple
+//it just stores a piece of data, we will call it val or value, and the it stores a reference to next:
+class Node {
+  constructor(val){
+     this.val = val;
+     this.next = null;
+  }
+}
+//bad example
+var first = new Node("Hi")
+first.next = new Node("there")
+first.next.next = new Node("how")
+//add two numbers
+
 
 function ListNode(val, next) {
     this.val = (val===undefined ? 0 : val)
@@ -195,6 +209,58 @@ function addTwoNumbers(l1, l2) {
 
 
 addTwoNumbers([342], [465])
+
+//ADD TWO NUMBERS ALTERNATE
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} l1
+ * @param {ListNode} l2
+ * @return {ListNode}
+ */
+
+
+ var addTwoNumbers = function(l1, l2) {
+   //define the node that will allow us access the head of our linked list. We are going to return  the next pointer,
+   //to find the actual head of our linked list
+  let dummyNode = new ListNode(0);
+  // assign current node to the dummynode so tat we can set the next node of our current node to the head of our current list
+  //when we add the first node into our linked list
+  let currentNode = dummyNode;
+  //define variable called carr and set it's initial value to zero
+  let carry =0;
+  //define 2 variables will allows to iterate thru both link list, recall that these link list will be the 
+  let pointerL1 = l1;
+  let pointerL2 = l2;
+  
+  while(pointerL1 !== null || pointerL2 !== null || carry !==0){
+      let valueOne = pointerL1 !== null ? pointerL1.val : 0;
+      let valueTwo = pointerL2 !== null ? pointerL2.val : 0;
+      
+      let sumOfValues = valueOne + valueTwo + carry;
+      
+      let newValue = sumOfValues % 10;
+      let newNode = new ListNode(newValue);
+      currentNode.next = newNode;
+      currentNode = newNode;
+      
+      carry = Math.floor(sumOfValues / 10);
+      
+      pointerL1 = pointerL1 !== null ? pointerL1.next : null;
+      pointerL2 = pointerL2 !== null ? pointerL2.next : null;
+      
+  }
+  
+ return dummyNode.next;
+  
+  
+};
 
 
 
