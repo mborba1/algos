@@ -244,27 +244,60 @@ addTwoNumbers([342], [465])
       let valueTwo = pointerL2 !== null ? pointerL2.val : 0;
       
       let sumOfValues = valueOne + valueTwo + carry;
-      
+      //here we are getting the remainder of dividing by 10 if we have a carry over
       let newValue = sumOfValues % 10;
+      //create a new node
       let newNode = new ListNode(newValue);
+      //assign the current node.next to the new node
       currentNode.next = newNode;
+      //and the current node to new node
       currentNode = newNode;
       
+      //calculate carry by dividing the sumofvalues by ten and flooring it
       carry = Math.floor(sumOfValues / 10);
       
+      //test if poiter1 and poingter2 are not null(if they have a value), assign to .next, otherwise they are null
       pointerL1 = pointerL1 !== null ? pointerL1.next : null;
       pointerL2 = pointerL2 !== null ? pointerL2.next : null;
       
   }
-  
+ //returns the new summy pointer node .next
  return dummyNode.next;
   
   
 };
 
+//Leetcode missing number problem 268 -easy
 
+/**Given an array nums containing n distinct numbers in the range [0, n], return the only number in the range that is missing from the array.
 
+ 
 
+Example 1:
+
+Input: nums = [3,0,1]
+Output: 2
+Explanation: n = 3 since there are 3 numbers, 
+so all numbers are in the range [0,3]. 2 is the missing number in the range since it 
+does not appear in nums. */
+
+var missingNumber = function(nums) {
+  //create two variables, one for the missingCountSum and ne for the totalCount, we aill subtract
+  //them at the end to find the missing number
+  let missingCountSum = 0;
+  let correctTotal =0;
+  //loop thru the nums list, we add 1 because we are missing one number ex.:[3, 0, 1,""]
+  for(let i=0; i< nums.length + 1; i++){
+      //sum the total
+      correctTotal += i;
+      //if the element exists add to the missing count
+      if(nums[i]){
+          missingCountSum += nums[i];
+      }
+  }
+  //return the 
+  return correctTotal - missingCountSum;
+};
 
 
 
