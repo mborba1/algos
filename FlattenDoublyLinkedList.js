@@ -13,19 +13,25 @@
  * Example: 
  * Input: head = [1,2,3,4,5,6,null,null,null,7,8,9,10,null,null,11,12]
  * Output: [1,2,3,7,8,11,12,9,10,4,5,6]
+ *  1 -> 2 -> 3 -> 4 -> 5 -> 6 -> null
+ *            |              
+ *            7 -> 8 -> 9 -> 10 -> null    
+ *                 |
+ *                 11 -> 12    
  */
 
 const flatten = function(head){
+    //check is there is a no head, return head
     if(!head) return head;
-
+    //assign currunt node to head
     let currNode = head;
 
-    while(currNode !== null){
-        if(currNode.child === null){
+    while(currNode !== null){// move thru the list while current node is not null
+        if(currNode.child === null){ //if current node doesn't have a child, point current node to next node
             currNode = currNode.next;
-        }else{
-            let tail = currNode.child;
-            while(tail.next !== null){
+        }else{ //if it has a child
+            let tail = currNode.child; // keep track of tail, the current node child assing to the tail
+            while(tail.next !== null){ //move thru the child 
                 tail = tail.next;
             }
             tail.next = currNode.next;
