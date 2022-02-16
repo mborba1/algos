@@ -26,23 +26,25 @@ const flatten = function(head){
     //assign currunt node to head
     let currNode = head;
 
-    while(currNode !== null){// move thru the list while current node is not null
-        if(currNode.child === null){ //if current node doesn't have a child, point current node to next node
+    while(currNode !== null){// move thru the list while current node doesn't reach the end (is not null)
+        if(currNode.child === null){ //if current node doesn't have a child, point current node to next node 
+                                     // moving thru the list
             currNode = currNode.next;
-        }else{ //if it has a child
+        }else{ //if it does have a child
             let tail = currNode.child; // keep track of tail, the current node child assing to the tail
-            while(tail.next !== null){ //move thru the child 
-                tail = tail.next;
+            while(tail.next !== null){ //while we are not at the end of the list, move thru it
+                tail = tail.next; // set tail to tail.next until reaches the end
             }
-            tail.next = currNode.next;
-            if(tail.next !== null){
-                tail.next.prev = tail;
-            }
+            tail.next = currNode.next; //once reach the end of child list, point tail to currentNode.next (4)
+                                       // so now  10 -> 4
+            if(tail.next !== null){   //this is to account for situations like 1<->2<->3 -> null is the last node
+                tail.next.prev = tail; // tail.next.prev means 10 <- 4                 |
+            }                          //                                              7 <-> 8 <-> 9 <-> 10 -> null
 
-            currNode.next = currNode.child;
-            currNode.next.prev = currNode;
-            currNode.child = null;
+            currNode.next = currNode.child; //point the next of currentNode to the child (3) -> (7)
+            currNode.next.prev = currNode; //point the prev of of currentNode.next to currentNode (3) <- (7) 
+            currNode.child = null; //set currentnode.child to null
         }
     }
-    return head;
+    return head; //return the head
 }
