@@ -21,3 +21,34 @@ function generateParenthesis(n){
 }
 
 generateParenthesis(3)
+
+//valid barckets
+var isValid = function(s) {
+    let open = '{[(';
+    let close = ']})';
+    
+    let validBrackets = {
+        "]": "[",
+        "}": "{",
+        ")": "("
+    }
+    
+    let stack = [];
+    
+    for(const char of s){
+        if(open.includes(char)){
+            stack.push(char)
+        }else if(close.includes(char)){
+            if(stack.length === 0){
+                return false;
+            }else{
+                if(stack[stack.length-1] === validBrackets[char]){
+                    stack.pop();
+                }else{
+                    return false
+                }
+            }
+        }
+    }
+    return stack.length === 0;
+};
