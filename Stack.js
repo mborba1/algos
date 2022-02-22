@@ -7,6 +7,7 @@ class Node {
 
 class Stack {
     constructor(){
+      
         this.first = null;
         this.last = null;
         this.size = 0;
@@ -39,13 +40,29 @@ class Stack {
     }
 }
 
+
 //Big O - of Stack
 //insertion - O(1)
 //deletion - O(1)
 //searching - O(n)
 //access - O(n)
 
-
+//implement stack for array:
+class Stack {
+    constructor(){
+      
+        this.array = []
+    }
+    peek(){
+        return this.array[this.array.length-1];
+    }
+    push(val){
+        this.array.push(val)
+    }
+    pop(){
+        
+    }
+}
 ////QUEUES /////
 
 //enqueue pseudocode
