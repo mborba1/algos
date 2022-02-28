@@ -44,13 +44,34 @@ class HashTable{
       return undefined;
     }
      keys(){
-        let keysArr =[];
+        // let keysArr =[];
+        // for(let i=0; i< this.data.length; i++){
+        //     if(this.data[i]){
+        //         keysArr.push(this.data[i][0][0])
+        //     }
+        // }
+        // return keysArr;
+        //below code is an improvement to above. Included for hash collision prevention 
+        if(!this.data.length){
+            return undefined
+        }
+        let result= [];
+
+        //loop thru all the elements
         for(let i=0; i< this.data.length; i++){
-            if(this.data[i]){
-                keysArr.push(this.data[i][0][0])
+            // if it's not an empty menory cell
+            if(this.data[i] && this.data[i].length){
+                //but also loop thru all the potential collisions
+                if(this.data.length > 1){
+                    for(let j = 0; j < this.data[i].length; j++){
+                        result.push(this.data[i][j][0])
+                    }
+                }else{
+                    result.push(this.data[i][0])
+                }
             }
         }
-        return keysArr;
+        return result;
     }
 }
 
