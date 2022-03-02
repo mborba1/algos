@@ -50,6 +50,92 @@ class BinarySearchTree {
         if(!found) return undefined;
         return current;
     }
+    remove(value){
+        //step 1. if there is a root, check if value is greater or less, mi=ove right or left, look for the value, 
+        //step 2. once the value is found, if there is a right, check if rigth has a left - 
+        //step 3. if it's child has a left , that left.value will replace the value that is being deleted
+        //step 4. that new child.value need to be under that parent's parent.
+
+        //if there is no root return false
+        if(!this.root) return false;
+        //assign this.root to variable name currentNode
+        let currentNode = this.root;
+        //declare a new variable that points to null
+        let parentNode = null;
+        while(currentNode){
+            if(value < currentNode.value){ //go left
+                parentNode = currentNode;
+                currentNode = currentNode.left
+            }else if(value > currentNode.value) { //go right
+                parentNode = currentNode
+                currentNode = currentNode.right
+            }else if(currentNode.value === value) { //if they match, need to find the loweast
+                
+                //Option 1: No right child
+                if(currentNode.right === null){
+                   if(parentNode == null){
+                       this.root = currentNode.left
+                   }else {
+                       //if parent greater than current value make current left child
+                       // a child parent
+                       if(currentNode.value < parentNode.value){
+                          parentNode.left = currentNode.left
+                          //if parent less then current value, make left child a right child of parent
+                       }else if(currentNode.value > parent.value){
+                           parentNode.right = currentNode.left;
+                       }
+                   }
+                }
+                //Option 2: Right child which doesn't have a left child
+                else if(currentNode.right.left === null){
+                    if(parentNode === null){
+                        this.root = currentNode.left
+                    }else {
+                        currentNode.right.left = currentNode.left;
+                        //if parent greater than current, make right child of the left the parent
+                        if(currentNode.value < parentNode.value){
+                            parentNode.left = currentNode.right
+
+                            //if parent is less than current, make right child a right child of the parent
+                        }else if(currentNode.value > parentNode.value){
+                            parentNode.right  = currentNode.right
+                        }
+                    }
+                }
+                //Option 3: Right child that has a left child
+
+                else{
+                    //find the right child's left most child
+
+                    let leftmost = currentNode.right.left;
+                    let leftmostParent = currentNode.right;
+                    while(leftmost.left !== null){
+                        leftmostParent = leftmost;
+                        leftmost = leftmost.left;
+                    }
+
+                    //Parent's left subtree is now leftmost's right subtree
+
+                    leftmostParent.left = leftmost.right;
+                    leftmost.left = currentNode.left;
+                    leftmost.right = currentNode.right;
+
+                    if(parentNode === null){
+                        this.root = leftmost;
+                    }else{
+                        if(currentNode.value < parentNode.value){
+                            parentNode.left = leftmost;
+                        }else if(currentNode.value > parentNode.value){
+                            parentNode.right = leftmost;
+                        }
+                    }
+
+                }
+                return true;
+            }
+        }
+    }
+
     contains(value){
         if(this.root === null) return false;
         var current = this.root,
