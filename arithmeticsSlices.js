@@ -20,7 +20,9 @@ Output: 0
     // step 4. return the count
     
 */
-
+function getTotalCount(count){
+    count = (1 + count) * count /2
+}
 var numberOfArithmeticSlices = function(nums) {
     
     if(nums.length < 3) return 0;
@@ -33,11 +35,53 @@ var numberOfArithmeticSlices = function(nums) {
             count++; // count 1
             continue;
         }
-        result += (1 + count) * count /2;
+        result += getTotalCount(count);
         prev = diff;
         count =0;
     }
  
     
-    return result + (1 + count) * count /2
+    return result + getTotalCount(count);
 };
+
+
+//**another solution */
+
+function totalCount (len) {
+    len =  (1+ len) * len /2
+  }
+  
+  
+  function numberOfArithmenticsSlices (nums) {
+     let result = 0
+     let currentLen = 0;
+  
+    for(let i =2, prev = nums[1] - nums[0]; i < nums.length; i++){
+        const diff = nums[i] - nums[i-1];
+        if(diff === prev) {
+           currentLen++;
+           continue;
+         }
+        result += totalCount(currentLen);
+       prev = diff;
+       currentLen =0
+   }
+  return result + totalCounts(currentLen)
+  }
+  
+  //using DP
+  var numberOfArithmeticSlices = function (A) {
+      let sum = 0,
+          dp = Array(A.length).fill(0);
+  
+      for (var i = 2; i <= dp.length - 1; i++) {
+          if (A[i] - A[i - 1] === A[i - 1] - A[i - 2]) {
+              dp[i] = 1 + dp[i - 1];
+              sum += dp[i];
+          }
+      }
+  
+      return sum;
+  };
+  
+
