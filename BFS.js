@@ -158,16 +158,21 @@ class BinarySearchTree {
         queue.push(node);
 
         while(queue.length){
+            // remove the first item in the queue and and assign to node variable
            node = queue.shift();
+           //push that node value into the data array
            data.push(node.value);
+           //check if node has left node child, if so push into queue array
            if(node.left) queue.push(node.left);
+           //check if node has left node child, if so push into the queue array
            if(node.right) queue.push(node.right);
         }
         return data;
     }
     DFSPreOrder(){
-
+        //initialize an array
         let data = [];
+        //assign root to current  variable
         let current = this.root;
 
         function traverse(node){
@@ -195,15 +200,19 @@ class BinarySearchTree {
     DFSInOrder(){
         let data = [];
         let current = this.root;
-
+        //create function to traverse the tree that takes a node
         function traverse(node){
-            
+            //if node has left child, traverse recursively until reaches the last left chicld node
             if(node.left) traverse(node.left);
+            //keep pushing node value into the data array
             data.push(node.value)
+            //check if node has right child, traverse recursively until it reaches the last right child node
             if(node.right) traverse(node.right);
             
         }
+        //visit the root node last 
         traverse(current)
+        //return the array with all nodes
         return data;
     }
 
@@ -212,10 +221,11 @@ class BinarySearchTree {
 
 
 var tree = new BinarySearchTree();
-tree.insert(10);
+tree.insert(9);
+tree.insert(4);
 tree.insert(6);
-tree.insert(15);
-tree.insert(3);
-tree.insert(8);
 tree.insert(20);
-console.log(tree.BFS());
+tree.insert(170);
+tree.insert(15);
+tree.insert(1)
+console.log(tree.DFSPostOrder());
